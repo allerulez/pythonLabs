@@ -1,0 +1,19 @@
+def split_it(string):
+    ret_str1 = ""
+    ret_str2 = ""
+    for c in string:
+        if c.islower() or c == "_" or c == ".":
+            ret_str1 = ret_str1 + c
+        elif c.isupper() or c == " " or c == "|":
+            ret_str2 = ret_str2 + c
+    return ret_str1, ret_str2
+
+def split_rec(string):
+    if not string:
+        return "",""
+    left,right = split_rec(string[1:])
+    if string[0].islower() or string[0] in "_.":
+        return string[0] + left, right
+    elif string[0].isupper() or string[0] in " |":
+        return left, string[0] + right
+    return left, right

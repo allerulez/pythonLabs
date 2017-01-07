@@ -1,0 +1,2 @@
+def generate_height(h0,v0,t0,a):
+	return (lambda t:h0 + v0*(t - t0) + 0.5*a*(t - t0)**2)

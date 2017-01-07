@@ -1,0 +1,33 @@
+def double_elements(lst):
+    return [e*2 for e in lst]
+
+
+def all_pairs_ordered(n):
+    return [(i,ii) for i in range(n+1) for ii in range(n+1)]
+
+
+def distribute(e, lst):
+    return [sub_lst + [e] for sub_lst in lst]
+
+
+def choose(n,k):
+    if n == k:
+        return 1
+    elif k == 0:
+        return 1
+    if k < n/2:
+        k = n - k
+    return n * choose(n-1,k) // (n - k)
+
+
+def pascal(n):
+    return [[choose(k, i) for i in range(k+1)] for k in range(n)] 
+
+
+
+
+if __name__ == "__main__":
+    assert double_elements([1, 2, 3, 4]) == [2, 4, 6, 8]
+    assert all_pairs_ordered(2) == [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+    assert distribute('k', [['o'], [0, 1, 2], ['o','o']]) == [['o', 'k'], [0, 1, 2, 'k'], ['o', 'o', 'k']]
+    assert pascal(4) == [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]]

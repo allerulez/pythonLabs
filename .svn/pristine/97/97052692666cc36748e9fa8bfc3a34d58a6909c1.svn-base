@@ -1,0 +1,26 @@
+
+"""
+vikho 11/20: Komplettering
+
+Föjer inte redovisningskraven, namn och labbtitel.
+
+"""
+
+def quicksort(seq):
+    if len(seq) == 1:
+        return seq
+    elif not seq:
+        return []
+    pivot = seq[0]
+    left = []
+    right = []
+    for i in seq[1:]:
+        if i < pivot:
+            left.append(i)
+        else:
+            right.append(i)
+    return quicksort(left) + [pivot] +quicksort(right)
+
+if __name__ == "__main__":
+    assert quicksort([45, 17, 39]) == [17, 39, 45]
+    assert quicksort([26, 4, 18, 27, 6, 4, 12]) == [4, 4, 6, 12, 18, 26, 27]

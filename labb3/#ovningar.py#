@@ -1,0 +1,73 @@
+def show_wordlist(num):
+    for e in num:
+        print(e, "-", num[e])
+
+def all_pairs(lst):
+    retlst=[]
+    for e in lst:
+        for ee in lst:
+            retlst.append((e,ee))
+    return retlst
+
+def unordered_pairs(lst):
+    retlst=[]
+    for e in lst:
+        for ee in lst:
+            if ee >= e:
+                retlst.append((e,ee))
+    return retlst
+
+def distribute(c, lst):
+    retlst = lst
+    for e in retlst:
+        e.append(c)
+    return retlst
+    
+def extend_each(c, lst):
+    for e in lst:
+        e.append(c)
+
+def push_strings(lst):
+    retlst = []
+    temp = 0
+    for e in lst:
+        if isinstance(e,str):
+            retlst.append(temp)
+            temp = e
+        else:
+            retlst.append(e)
+    return retlst
+
+
+def push_stringsi(lst):
+    retlst = []
+    temp = 0
+    for i in range(len(lst)):
+        if isinstance(lst[i],str):
+            retlst.append(temp)
+            temp = lst[i]
+        else:
+            retlst.append(lst[i])
+    return retlst
+
+def sum_all_numbers(lst):
+    if not lst:
+        return 0
+    if isinstance(lst[0], list):
+        return sum_all_numbers(lst[0]) + sum_all_numbers(lst[1:])
+    elif isinstance(lst[0], int):
+        return lst[0] + sum_all_numbers(lst[1:])
+    return sum_all_numbers(lst[1:])
+
+def exists(c, lst):
+    if not lst:
+        return False
+    if lst[0] == c:
+        return True
+    elif isinstance(lst[0], list):
+        inner = exists(c,lst[0])
+        return inner if inner else exists(c,lst[1:])
+    else:
+        return exists(c,lst[1:])
+
+def without_vowels

@@ -1,0 +1,68 @@
+#Anton Gefvert antge210, Aleksi Evansson aleev379
+#7. Abstraktion
+#Uppgift 7a
+
+"""
+vikho 12/7: Komplettering
+Det är bra att ni användeer ensure, men ni bryter verkligen på abstraktionen, ni
+ska använda er av de abstrakta datatypernas primitiver för att få fram värdena
+inte indexera/slica själva, detta nedan är ju inte läsbart på något sätt.
+
+Ni har fixat problemen med indexering och end_time och start_time ser bra ut.
+Dock så bryter ni fortfarande mot abstraktionen i overlap, ni ska inte använda
+strip_tag utan primitiva funktioner (i detta fall get_integer). Men ni
+behöver inte ens göra det utan ni bör endast här använda er av latest_time och
+earliest_time så får ni ned antalet rader drastiskt. Och ni ska inte använda attach_tag
+på typer som ni inte håller på att implementera. Det är alltså endast tillåtet
+att använda attach_tag i new_duration för att sätta på 'duration'. Annars så
+ska ni använda primitiva funktioner så som new_hour, new_minute osv.
+"""
+
+
+def start_time(ts):
+    "span -> hour x minute"
+    ensure(ts, is_time_span)
+    return strip_tag(ts)[0]
+
+def end_time(ts):
+    "span -> hour x minute"
+    ensure(ts, is_time_span)
+    return strip_tag(ts)[1]
+
+def overlap(ts1, ts2):
+    "span x span -> span"
+    ensure(ts1, is_time_span)
+    ensure(ts2, is_time_span)
+    t1_start_h = strip_tag(get_hour(start_time(ts1)))
+    t1_start_m = strip_tag(get_minute(start_time(ts1)))
+    t1_end_h = strip_tag(get_hour(end_time(ts1)))
+    t1_end_m = strip_tag(get_minute(end_time(ts1)))
+    t2_start_h = strip_tag(get_hour(start_time(ts2)))
+    t2_start_m = strip_tag(get_minute(start_time(ts2)))
+    t2_end_h = strip_tag(get_hour(end_time(ts2)))
+    t2_end_m = strip_tag(get_minute(end_time(ts2)))
+
+    start_m = max(t1_start_h*60+t1_start_m, t2_start_h*60+t2_start_m)
+    end_m = min(t1_end_h*60+t1_end_m, t2_end_h*60+t2_end_min)
+    return attach_tag('span', (
+                attach_tag('time', (attach_tag('hour', start_m//60), attach_tag('minute', start_m%60))), 
+                attach_tag('time', (attach_tag('hour', end_m//60), attach_tag('minute', end_m%60))))) 
+
+def new_duration(hour, minute):
+    "hour x minute -> duration"
+    ensure(hour, is_hour)
+    ensure(minute, is_minute)
+    return attach_tag('duration', (
+        attach_tag('hour', strip_tag(hour)+ strip_tag(minute) // 60), 
+        attach_tag("minute" ,strip_tag(minute) % 60)))
+
+def length_of_span(ts):
+    "span -> duration"
+    ensure(ts, is_time_span)
+    start_h = strip_tag(get_hour(start_time(ts)))
+    start_m = strip_tag(get_minute(start_time(ts)))
+    end_h = strip_tag(get_hour(end_time(ts)))
+    end_m = strip_tag(get_minute(end_time(ts)))
+    
+    mins = end_h*60 + end_m - start_h*60 - start_m
+    return attach_tag('duration', (attach_tag('hour', mins//60), attach_tag('minute', mins%60)))

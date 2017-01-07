@@ -1,0 +1,40 @@
+#Anton Gefvert antge210, Aleksi Evansson aleev379
+#4. Funktionell programmering
+#Uppgift 4c
+
+
+import math
+
+def compose(func1, func2):
+	""" Applies func1 to func2 """
+    return (lambda x : func1(func2(x)))
+
+
+def repeat(func, n):
+	""" Applies a funcion n times """
+    if n == 1:
+        return func
+    return compose(func, repeat(func,n-1))
+
+
+def smooth(func):
+	""" Returns the smoothed function """
+	def smoothing(x):
+		dx = 0.001
+		return (func(x-dx)+func(x)+func(x+dx))/3
+	return smoothing
+
+
+def twice_smoothed_square(x):
+	""" Returns the square of x, smoothed twice """
+	return repeat(smooth,2)(lambda x: x**2)(x)
+
+
+def twice_smoothed_sin(x):
+	""" Returns sin x, smoothed twice """
+	return repeat(smooth,2)(math.sin)(x)
+
+
+def repeatedly_smoothed(func, n):
+	""" Returns a function smoothed n times """
+	return repeat(smooth, n)(func)

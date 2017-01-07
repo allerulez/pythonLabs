@@ -1,0 +1,17 @@
+def powerset(lst):
+    if not isinstance(lst, list):
+        return [[lst]]
+    elif lst == []:
+        return [lst]
+    #for i in range(len(lst)):
+
+    ln = len(lst)
+    return powerset(lst[:ln-1]) + powerset(lst[ln-1])    
+
+    #return [powerset([]) for i in range(2**len(lst))]
+
+
+
+if __name__ == "__main__":
+    assert  powerset([1]) == [[],[1]]
+
